@@ -20,9 +20,7 @@ bottle==0.12.8
 cfgm_common
 ConfigParser
 consistent-hash
-contrail-vrouter-api
 discoveryclient
-docker-py
 eventlet
 gevent==1.1a2
 geventhttpclient==1.0a
@@ -43,4 +41,3 @@ stevedore
 thrift
 vnc_api
 xmltodict
-

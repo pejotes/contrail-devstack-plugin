@@ -194,37 +194,30 @@ elif [[ "$1" == "stack" && "$2" == "pre-install" ]]; then
 
     fetch_contrail
 
+    echo_summary "Building contrail"
+    cd $CONTRAIL_DEST
+    sudo -E scons $SCONS_ARGS
+    cd $TOP_DIR
+
+    # Master node
     if is_service_enabled api-srv disco svc-mon schema control collector analytics-api query-engine dns named; then
+        echo_summary "Installing cassandra with cpp drivers"
         install_cassandra
         install_cassandra_cpp_driver
 
-        # Packages should have been installed by devstack
-        #install_package $(_parse_package_files $CONTRAIL_DEST)
-
-        echo_summary "Building contrail"
-        cd $CONTRAIL_DEST
-        sudo -E scons $SCONS_ARGS
-        cd $TOP_DIR
-
         # As contrail's python packages requirements aren't installed
         # automatically, we have to manage their installation.
-        pip_install -r $CONTRAIL_PLUGIN_DIR/files/requirements.txt
-
+        echo_summary "Installing contrail control python dependencies"
+        pip_install -r $CONTRAIL_PLUGIN_DIR/files/requirements-control.txt
     fi
+
+    # Compute node
     if is_service_enabled vrouter; then
-        echo_summary "Building contrail vrouter"
-
-        cd $CONTRAIL_DEST
-
-        # Build vrouter-agent if not done earlier
-        if ! is_service_enabled api-srv disco svc-mon schema control collector analytics-api query-engine dns named; then
-            sudo -E scons $SCONS_ARGS controller/src/vnsw
-        fi
-
-        # Build vrouter kernel module
-        sudo -E scons $SCONS_ARGS vrouter
-        cd $TOP_DIR
+        echo_summary "Installing contrail compute python dependencies"
+        pip_install -r $CONTRAIL_PLUGIN_DIR/files/requirements-vrouter.txt
     fi
+
+    # WebUI
     if is_service_enabled ui-webs ui-jobs; then
         # Fetch 3rd party and install webui
         configure_webui
@@ -305,4 +298,3 @@ elif [[ "$1" == "clean" ]]; then
     #no-op
     :
 fi
-

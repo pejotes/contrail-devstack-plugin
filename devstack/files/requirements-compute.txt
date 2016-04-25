@@ -1,0 +1,6 @@
+contrail-vrouter-api
+docker-py
+eventlet
+netaddr
+requests
+thrift

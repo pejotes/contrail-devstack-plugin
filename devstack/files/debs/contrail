@@ -43,8 +43,8 @@ libipfix-dev
 
 
 nodejs
-nodejs-legacy
-npm
+#nodejs-legacy
+#npm
 zookeeperd
 ifmap-server
 redis-server

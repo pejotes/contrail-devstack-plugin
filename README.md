@@ -32,7 +32,7 @@ It may be safer to use a stable version of devstack & openstack
 > is currently a [bug](https://bugs.launchpad.net/opencontrail/+bug/1579806) with keystone client.
 > To overcome this issue, cherry-pick the fix by appending the following line to your local.conf:
 >
-> CONTRAIL_PATCHES='cd $CONTRAIL_DEST/controller && git fetch https://review.opencontrail.org/Juniper/contrail-controller refs/changes/10/20010/4 && git cherry-pick FETCH_HEAD'
+    CONTRAIL_PATCHES='cd $CONTRAIL_DEST/controller && git fetch https://review.opencontrail.org/Juniper/contrail-controller refs/changes/10/20010/8 && git cherry-pick FETCH_HEAD'
 
 Copy sample local.conf into devstack directory, and enable this plugin
 

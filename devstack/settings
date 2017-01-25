@@ -1,6 +1,7 @@
 #!/bin/bash
 # Contrail devstack plugin settings, loaded by devstack in "source" phase
 
+RECLONE_CONTRAIL=${RECLONE_CONTRAIL:-False}
 # Make sure nova-network and neutron agents aren't enabled
 disable_service n-net q-agt q-l3 q-dhcp q-meta q-dhcp q-lbaas
 

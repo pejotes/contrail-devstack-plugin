@@ -7,7 +7,7 @@ function fetch_contrail() {
         sudo mv repo /usr/bin
     fi
 
-    if [[ ! -d "$CONTRAIL_DEST/.repo"  || "$RECLONE" = "True" ]]; then
+    if [[ ! -d "$CONTRAIL_DEST/.repo"  || "$RECLONE_CONTRAIL" = "True" ]]; then
         sudo mkdir -p $CONTRAIL_DEST
         safe_chown -R $STACK_USER $CONTRAIL_DEST
         safe_chmod 0755 $CONTRAIL_DEST
@@ -28,7 +28,7 @@ function fetch_contrail() {
         cd "$TOP_DIR"
     fi
 
-    if [[ ! -e "$CONTRAIL_DEST/third_party/FETCH_DONE" || "$RECLONE" = "True" ]]; then
+    if [[ ! -e "$CONTRAIL_DEST/third_party/FETCH_DONE" || "$RECLONE_CONTRAIL" = "True" ]]; then
         python $CONTRAIL_DEST/third_party/fetch_packages.py && touch "$CONTRAIL_DEST/third_party/FETCH_DONE"
     fi
 }
@@ -63,7 +63,7 @@ function install_cassandra_cpp_driver() {
 }
 
 function fetch_webui(){
-    if [[ ! -e "$CONTRAIL_DEST/contrail-webui-third-party/FETCH_DONE" || "$RECLONE" == "True" ]]; then
+    if [[ ! -e "$CONTRAIL_DEST/contrail-webui-third-party/FETCH_DONE" || "$RECLONE_CONTRAIL" == "True" ]]; then
         cd $CONTRAIL_DEST/contrail-web-core
         sed -ie "s|webController\.path.*|webController\.path = \'$CONTRAIL_DEST/contrail-web-controller\';|" config/config.global.js
         make fetch-pkgs-prod

@@ -12,6 +12,13 @@ function _vercmp()
     local v2=$3
     local result
 
+    if [ $v1 == 'master' ]; then
+        v1=$ACTUAL_CONTRAIL_MASTER_BRANCH_VERION
+    fi
+    if [ $v2 == 'master' ]; then
+        v2=$ACTUAL_CONTRAIL_MASTER_BRANCH_VERION
+    fi
+
     # sort the two numbers with sort's "-V" argument.  Based on if v2
     # swapped places with v1, we can determine ordering.
     result=$(echo -e "$v1\n$v2" | sort -V | head -1)

@@ -302,7 +302,11 @@ elif [[ "$1" == "stack" && "$2" == "pre-install" ]]; then
 
         echo_summary "Building contrail"
         cd $CONTRAIL_DEST
-        sudo -E scons $SCONS_ARGS
+        retry_count=0
+        until [ $retry_count -ge 5 ]; do
+            sudo -E scons $SCONS_ARGS && break
+            retry_count=$(($retry_count + 1))
+        done
         cd $TOP_DIR
 
         # As contrail's python packages requirements aren't installed

@@ -66,7 +66,7 @@ function install_cassandra_cpp_driver() {
     mkdir -p $CASS_CPP_DIR/build
     cd $CASS_CPP_DIR/build
     cmake -DCMAKE_INSTALL_PREFIX=/usr ..
-    make
+    make -j$SCONS_JOBS
     sudo make install
 
     cd $TOP_DIR
@@ -301,7 +301,11 @@ elif [[ "$1" == "stack" && "$2" == "pre-install" ]]; then
 
         echo_summary "Building contrail"
         cd $CONTRAIL_DEST
-        sudo -E scons $SCONS_ARGS
+        retry_count=0
+        until [ $retry_count -ge 5 ]; do
+            sudo -E scons $SCONS_ARGS && break
+            retry_count=$(($retry_count + 1))
+        done
         cd $TOP_DIR
 
         # As contrail's python packages requirements aren't installed

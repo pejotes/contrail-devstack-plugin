@@ -306,6 +306,7 @@ elif [[ "$1" == "stack" && "$2" == "pre-install" ]]; then
             sudo -E scons $SCONS_ARGS && break
             retry_count=$(($retry_count + 1))
         done
+        sudo -E scons $SCONS_ARGS
         cd $TOP_DIR
 
         # As contrail's python packages requirements aren't installed
